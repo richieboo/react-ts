@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {BrowserRouter,Switch,Route,Link} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Demo from './day1/demo';
@@ -7,6 +8,7 @@ import TempConverter from './day2/TempConverter';
 import Top from './day3/Top';
 import Bottom from './day3/Bottom';
 import State from './day3/State';
+import Proper from './day4/Proper';
 //import {thisfx,thatfx} from 'whatever';
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
 
   const [someVal,setSomeVal] = useState(0);
   const [name,setName] = useState<string>();
+  const [showComp, setShowComp] = useState(true);
 
   const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setSomeVal(parseFloat(event.currentTarget.value));
@@ -24,19 +27,36 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Demo />
-      <hr/>
-      <Child transVal={someText} someNum={12} />
-      <hr/>
-      <input onChange={handleChange} /> <b>&deg;F</b>
-      <TempConverter fahr={someVal} />
-      <hr/>
-      <Top setGreetName={setName} />
-      <Bottom greetName={name} />
-      <hr/>
-      <State passVal={0} />
-    </div>
+    <>
+    <BrowserRouter>
+    <Link to="/">Demo</Link>
+    <Link to="/child">Child</Link>
+    <Link to="/greet">Greet</Link>
+    <Link to="/showState">Show State</Link>
+    <Link to="/proper">Proper</Link>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={Demo} />
+          <Route path="/child">
+            <Child transVal={someText} someNum={12} />
+          </Route>
+          <Route path="/temp">
+            <input onChange={handleChange} /> <b>&deg;F</b>
+            <TempConverter fahr={someVal} />
+          </Route>
+          <Route path="/greet">
+            <Top setGreetName={setName} />
+            <Bottom greetName={name} />
+          </Route>
+          <Route path="/showState">
+            <button onClick={()=>{setShowComp(!showComp)}}>Toggle</button>
+            {showComp && <State passVal={0} />}
+          </Route>
+          <Route path="/proper" component={Proper} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+    </>
   );
 }
 
