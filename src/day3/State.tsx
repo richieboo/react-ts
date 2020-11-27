@@ -8,23 +8,20 @@ const State = (props:{
     // var num:string = "20.5";
     // var digit:number = parseFloat(num);
     // console.log(digit);
-
-    const [counter,setCounter] = useState<number>();
+    //@ts-ignore
+    const [counter,setCounter] = useState<number>(JSON.parse(localStorage.getItem('counter')));
 
     useEffect(()=>{
-        //counter++;
+        localStorage.setItem('counter',JSON.stringify(counter));
         console.log(counter);
     },[counter]);
 
     useEffect(()=>{
         setCounter(0);
-        console.log("Rendering" + localStorage['counter']);
-        if(localStorage['counter'] !== NaN)
-            setCounter(parseInt(localStorage['counter']));
-
+        //@ts-ignore
+        setCounter(JSON.parse(localStorage.getItem('counter')));
         return (()=>{
             console.log("Unmounting");
-            localStorage['counter'] = counter;
         });
     },[]);
 
@@ -32,8 +29,8 @@ const State = (props:{
         <>
         <h1>Counter is now at {counter}</h1>
         {//@ts-ignore
-        <button onClick={()=>{setCounter(counter+1)}}>Click Me</button>
         }
+        <button onClick={()=>{setCounter(counter+1)}}>Click Me</button>
         </>
     );
 }
