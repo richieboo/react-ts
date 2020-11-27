@@ -9,6 +9,7 @@ import Top from './day3/Top';
 import Bottom from './day3/Bottom';
 import State from './day3/State';
 import Proper from './day4/Proper';
+import Fetcher from './day5/Fetcher';
 //import {thisfx,thatfx} from 'whatever';
 
 function App() {
@@ -34,8 +35,10 @@ function App() {
     <Link to="/greet">Greet</Link>
     <Link to="/showState">Show State</Link>
     <Link to="/proper">Proper</Link>
+    <Link to="/fetcher">Fetcher</Link>
       <div className="App">
         <Switch>
+          <Route path="/fetcher" component={Fetcher} />
           <Route exact path="/" component={Demo} />
           <Route path="/child">
             <Child transVal={someText} someNum={12} />
